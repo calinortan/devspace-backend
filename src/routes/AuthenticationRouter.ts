@@ -26,7 +26,7 @@ export class AuthenticationRouter {
   }
 
   public attemptLogin(req: Request, res: Response, next: NextFunction) {
-    const token = JwtTokenCreator.generateToken(req.user.password, Date.now())
+    const token = JwtTokenCreator.generateToken(req.user.id, Date.now())
     res.status(200).json({ status: "succesful", token });
   }
 
