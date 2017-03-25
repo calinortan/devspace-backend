@@ -58,7 +58,7 @@ class App {
       });
     });
     this.express.use('/', router);
-    this.express.use('/api/v1/users', AuthenticationRouter)
+    this.express.use('/api/v1/', AuthenticationRouter)
   }
 
 }

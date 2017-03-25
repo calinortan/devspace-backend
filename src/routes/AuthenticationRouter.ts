@@ -1,51 +1,37 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { UserModel, User } from '../models/User';
+import { encode } from 'jwt-simple';
+import JwtTokenCreator from '../services/JwtTokenCreator'
+import * as Passport from 'passport';
+import UsersRouter from './entityRouters/UsersRouter';
+import DocumentsRouter from './entityRouters/DocumentsRouter';
+import PassportStrategyManager from '../services/PassportStrategyManager'
 
 export class AuthenticationRouter {
   private router: Router;
+  private strategyManager: PassportStrategyManager;
 
   constructor() {
     this.router = Router();
-    this.init();
+    this.strategyManager = new PassportStrategyManager();
+    this.setRoutes();
   }
 
-  private init(): void {
-    this.router.get('/', this.getAllUsers);
-    this.router.get('/:user_id', this.getUserWithId);
-    this.router.post('/', this.addUser);
+  private setRoutes(): void {
+    this.router.use(/^(?!(\/session|\/users)$).*$/, this.strategyManager.createJwtHandler());
+    this.router.post('/session', this.strategyManager.createLocalHandler(), this.attemptLogin);
+    // endpoints 
+    this.router.use('/users', UsersRouter);
+    this.router.use('/documents', DocumentsRouter);
+  }
+
+  public attemptLogin(req: Request, res: Response, next: NextFunction) {
+    const token = JwtTokenCreator.generateToken(req.user.password, Date.now())
+    res.status(200).json({ status: "succesful", token });
   }
 
   public getRouter(): Router {
     return this.router
-  }
-
-  private getAllUsers(req: Request, res: Response, next: NextFunction) {
-    UserModel.find((err, users) => {
-      if (err != null) {
-        res.send({ error: "Something went wrong" });
-      }
-      res.status(200).json(users);
-    });
-  }
-
-  private getUserWithId(req: Request, res: Response, next: NextFunction) {
-    const userId: string = req.params.user_id;
-    UserModel.findById(userId, (err, user) => {
-      if (err != null) {
-        console.log(err);
-        res.send({ error: "Something went wrong" });
-      }
-      res.status(200).json(user);
-    });
-  }
-
-  private addUser(req: Request, res: Response, next: NextFunction) {
-    const users = <User>req.body;
-    UserModel.insertMany(users).then((users) => {
-      res.status(200).json({ status: "succesful" });
-    }).catch((error) => {
-      res.send({error: error.message});
-    });
   }
 }
 

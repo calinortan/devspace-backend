@@ -1,6 +1,7 @@
 import * as http from 'http';
 import * as debug from 'debug';
-import * as mongoose from 'mongoose'; // export variables individually
+// import * as mongoose from 'mongoose'; // export variables individually
+import mongoose = require('mongoose');
 import DevspaceUtils = require('./utils/DevspaceUtils'); // export = bla bla
 import App from './App'; // export default
 import io = require('socket.io');
@@ -8,6 +9,7 @@ import io = require('socket.io');
 /**
  * @todo Implement a database acces layer
  */
+mongoose.Promise = Promise
 mongoose.connect('mongodb://localhost:auth/devspace');
 
 debug('ts-express:server');
