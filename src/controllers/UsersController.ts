@@ -2,7 +2,7 @@ import { UserModel, User } from '../models/User';
 import { Router, Request, Response, NextFunction } from 'express';
 import JwtTokenCreator from '../services/JwtTokenCreator'
 
-class AuthenticationController {
+class UsersController {
 
   public getAllUsers(req: Request, res: Response, next: NextFunction) {
     UserModel.find((err, users) => {
@@ -51,4 +51,4 @@ class AuthenticationController {
   }
 }
 
-export default AuthenticationController;
+export default UsersController;

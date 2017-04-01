@@ -5,6 +5,7 @@ import JwtTokenCreator from '../services/JwtTokenCreator'
 import * as Passport from 'passport';
 import UsersRouter from './entityRouters/UsersRouter';
 import DocumentsRouter from './entityRouters/DocumentsRouter';
+import FriendRequestsRouter from './entityRouters/FriendRequestsRouter';
 import PassportStrategyManager from '../services/PassportStrategyManager'
 
 export class AuthenticationRouter {
@@ -23,6 +24,7 @@ export class AuthenticationRouter {
     // endpoints 
     this.router.use('/users', UsersRouter);
     this.router.use('/documents', DocumentsRouter);
+    this.router.use('/friend-requests', FriendRequestsRouter);
   }
 
   public attemptLogin(req: Request, res: Response, next: NextFunction) {
