@@ -1,5 +1,7 @@
 import { FriendRequestModel, FriendRequest } from '../models/FriendRequest';
+import { addFriend } from '../models/User'
 import { Router, Request, Response, NextFunction } from 'express';
+import { ModelFindByIdAndUpdateOptions } from 'mongoose'
 
 class FriendRequestsController {
 
@@ -24,13 +26,21 @@ class FriendRequestsController {
 
     const userId = req.user.get('id');
     const requestId = req.params.friendRequest_id;
-
-    FriendRequestModel.findByIdAndUpdate(requestId, { status }).then((friendReq: FriendRequest) => {
+    const options: ModelFindByIdAndUpdateOptions = {
+      new: true
+    }
+    FriendRequestModel.findByIdAndUpdate(requestId, { status }, options).then((friendReq: FriendRequest) => {
       /**
        * @todo Create constants for friend request status: PENDING, ACCEPTED, REJECTED
        */
-      if (status == 'accepted' && userId != friendReq.to ) {
+      const supportedStatusStates: String[] = ['PENDING', 'ACCEPTED', 'REJECTED'];
+      const isRequestValid: Boolean = supportedStatusStates.indexOf(status.toUpperCase()) < 0
+      if (isRequestValid || userId != friendReq.to) {
         return res.status(401).send('Unauthorized');
+      }
+      if (status.toUpperCase() === 'ACCEPTED') {
+        addFriend(friendReq.from, friendReq.to);
+        addFriend(friendReq.to, friendReq.from);
       }
       res.status(200).json({ status: "FriendRequest updated succesful", friendReq });
     });

@@ -17,7 +17,10 @@ const userSchema = new Mongoose.Schema({
   programmingLanguages: [String],
   computerOS: String,
   mobileOS: String,
-  connections: [Schema.Types.ObjectId]
+  connections: {
+    type: [Schema.Types.ObjectId],
+    ref: 'user' 
+  }
 });
 
 userSchema.pre('save', function (next) {
@@ -54,5 +57,13 @@ interface User extends Document {
 }
 
 const UserModel = model<User>('user', userSchema)
+const addFriend = (userId: User, friendId: User): Mongoose.DocumentQuery<User, User> => {
+  return UserModel.findByIdAndUpdate(
+    userId,
+    { $addToSet: { connections: friendId } },
+    (err, user) => { if (err) console.log(err) }
+  );
+}
 
-export { UserModel, User}
+
+export { UserModel, User, addFriend }
