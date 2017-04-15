@@ -23,7 +23,11 @@ class FriendRequestsController {
   public updateFriendRequestStatus(req: Request, res: Response, next: NextFunction) {
     const status: String = req.body.status
     if (status == null) return res.status(400).send("bad request, missing field 'status'");
-
+    const supportedStatusStates: String[] = ['PENDING', 'ACCEPTED', 'REJECTED'];
+    const isRequestValid: Boolean = supportedStatusStates.indexOf(status.toUpperCase()) > -1;
+    if (!isRequestValid) {
+      return res.status(401).send('Unauthorized');
+    }
     const userId = req.user.get('id');
     const requestId = req.params.friendRequest_id;
     const options: ModelFindByIdAndUpdateOptions = {
@@ -33,9 +37,7 @@ class FriendRequestsController {
       /**
        * @todo Create constants for friend request status: PENDING, ACCEPTED, REJECTED
        */
-      const supportedStatusStates: String[] = ['PENDING', 'ACCEPTED', 'REJECTED'];
-      const isRequestValid: Boolean = supportedStatusStates.indexOf(status.toUpperCase()) < 0
-      if (isRequestValid || userId != friendReq.to) {
+      if (userId != friendReq.to) {
         return res.status(401).send('Unauthorized');
       }
       if (status.toUpperCase() === 'ACCEPTED') {
