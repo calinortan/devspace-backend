@@ -9,6 +9,11 @@ class FriendRequestsController {
     const query = {};
     if (req.query.from != null) query['from'] = req.query.from;
     if (req.query.to != null) query['to'] = req.query.to;
+    if (req.query.users_id_in != null) {
+      const userIds = req.query.users_id_in.split(',');
+      query['from'] = { $in: userIds};
+      query['to'] = { $in: userIds};
+    };
 
     FriendRequestModel.find(query)
       .populate({
@@ -16,8 +21,10 @@ class FriendRequestsController {
         select: 'name avatar'
       })
       .then((requests) => {
+        if (requests == null) return res.status(404);
         res.status(200).json({ friendRequests: requests });
-      });
+      })
+      .catch(err => res.status(400).json({message: err.message}));
   }
 
   public updateFriendRequestStatus(req: Request, res: Response, next: NextFunction) {
