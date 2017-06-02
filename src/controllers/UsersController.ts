@@ -1,4 +1,5 @@
 import { UserModel, User } from '../models/User';
+import { StatsModel, Stats, StatsData } from '../models/Stats'
 import { Router, Request, Response, NextFunction } from 'express';
 import JwtTokenCreator from '../services/JwtTokenCreator'
 
@@ -11,6 +12,27 @@ class UsersController {
       }
       res.status(200).json(users);
     });
+  }
+  public getStats(req: Request, res: Response, next: NextFunction) {
+    const userId: string = req.params.user_id;
+    StatsModel.findOne({user: userId})
+      .then((stats: Stats) => {
+        res.status(200).json(stats)
+      })
+      .catch((err) => res.status(404).send(err))
+  }
+
+  public saveOrUpdateStats(req: Request, res: Response, next: NextFunction) {
+    const userId: string = req.params.user_id;
+    const data: StatsData = {
+      age: req.body.age,
+      workplace: req.body.workplace,
+    };
+    StatsModel.findOneAndUpdate({user: userId}, {data}, {new: true, upsert: true})
+      .then((stats: Stats) => {
+        res.status(200).json(stats)
+      })
+      .catch((err) => res.status(404).send(err))
   }
 
   public getUserWithId(req: Request, res: Response, next: NextFunction) {

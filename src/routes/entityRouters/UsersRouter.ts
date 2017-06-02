@@ -20,7 +20,10 @@ export class UsersRouter {
   private setRoutes(): void {
     this.router.get('/',this.strategyManager.createJwtHandler(), this.controller.getAllUsers);
     this.router.post('/', this.controller.addUser);
-    this.router.get('/:user_id',this.strategyManager.createJwtHandler(), this.controller.getUserWithId);
+    this.router.get('/:user_id', this.controller.getUserWithId);
+    this.router.get('/:user_id/stats', this.controller.getStats);
+    this.router.put('/:user_id/stats', this.controller.saveOrUpdateStats);
+
   }
 
   public getRouter(): Router {

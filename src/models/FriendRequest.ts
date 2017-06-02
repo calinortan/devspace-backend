@@ -6,7 +6,7 @@ const friendRequestSchema = new Mongoose.Schema({
   from: {
     type: Schema.Types.ObjectId,
     ref: 'user',
-    index: String
+    index: true
   },
   to: {
     type: Schema.Types.ObjectId,
