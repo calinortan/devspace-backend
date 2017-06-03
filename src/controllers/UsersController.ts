@@ -1,7 +1,8 @@
 import { UserModel, User } from '../models/User';
 import { StatsModel, Stats, StatsData } from '../models/Stats'
 import { Router, Request, Response, NextFunction } from 'express';
-import JwtTokenCreator from '../services/JwtTokenCreator'
+import JwtTokenCreator from '../services/JwtTokenCreator';
+import ScriptRunner from '../services/ScriptRunner';
 
 class UsersController {
 
@@ -15,6 +16,7 @@ class UsersController {
   }
   public getStats(req: Request, res: Response, next: NextFunction) {
     const userId: string = req.params.user_id;
+    ScriptRunner.computeStatsFor(userId);
     StatsModel.findOne({user: userId})
       .then((stats: Stats) => {
         res.status(200).json(stats)

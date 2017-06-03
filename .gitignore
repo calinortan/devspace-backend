@@ -2,3 +2,5 @@ node_modules
 dist
 config
 npm-debug.log
+scripts/config.py
+scripts/__pycache__
