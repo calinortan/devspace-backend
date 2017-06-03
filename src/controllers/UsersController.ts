@@ -16,7 +16,6 @@ class UsersController {
   }
   public getStats(req: Request, res: Response, next: NextFunction) {
     const userId: string = req.params.user_id;
-    ScriptRunner.computeStatsFor(userId);
     StatsModel.findOne({user: userId})
       .then((stats: Stats) => {
         res.status(200).json(stats)
