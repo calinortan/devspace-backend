@@ -17,5 +17,6 @@ user_id = '58d7a61f11af570bc83e9d34'
 db_conn = get_mongo_connection(mongodb_url, 'calinortandb')
 rec = LinkRecommender(db_conn, user_id)
 rec.apply_kmeans(3)
-rec.print_clusters()
+rec.plot_3d_clusters()
+# rec.print_clusters()
 

@@ -1,12 +1,14 @@
 import devspace_utils
 import numpy as np
 import pymongo
+import matplotlib.pyplot as plt
 from bson.objectid import ObjectId
 from collections import defaultdict
 from config import mongodb_url
 from pprint import pprint
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import MinMaxScaler
+from mpl_toolkits.mplot3d import Axes3D
 
 
 
@@ -39,10 +41,10 @@ class LinkRecommender:
 
     def create_features_set(self, user):
         user_features = defaultdict(float)
-        self.add_age_feature(user_features, user)
+        # self.add_age_feature(user_features, user)
         self.add_workplace_feature(user_features, user)
         self.add_mobile_os_feature(user_features, user)
-        self.add_computer_os_feature(user_features, user)
+        # self.add_computer_os_feature(user_features, user)
         self.add_interests_feature(user_features, user)
 
         return user_features
@@ -80,7 +82,8 @@ class LinkRecommender:
         np_features_array = np.array(self.features_list)
         X = MinMaxScaler(feature_range=(
             0, 1), copy=False).fit_transform(np_features_array)
-        pprint(X)
+        # pprint(X)
+        self.np_features_array = X
         self.n_clusters = n_clusters
         self.kmeans = KMeans(n_clusters, random_state=0).fit(X)
 
@@ -90,6 +93,28 @@ class LinkRecommender:
     def get_user_connections(self):
         user = self.db_conn['users'].find_one({'_id': ObjectId(self.user_id)})
         return user['connections']
+
+    def plot_2d_clusters(self):
+        """Only works when 2 features are computed"""
+        labels = self.get_kmeans_labels()
+        X = self.np_features_array
+        # print(labels)
+        plt.scatter(X[:, 0], X[:, 1], marker='^', c=labels)
+        plt.show()
+
+    def plot_3d_clusters(self):
+        """Only works when 3 features are computed"""
+        labels = self.get_kmeans_labels()
+        X = self.np_features_array
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+        ax.scatter(X[:, 0], X[:, 1], X[:,2], marker='^', c=labels)
+
+        ax.set_xlabel('X Label')
+        ax.set_ylabel('Y Label')
+        ax.set_zlabel('Z Label')
+
+        plt.show()
 
     def get_current_connections_stats(self):
         return self.db_conn['stats'].find_one({'user': ObjectId(self.user_id)})
