@@ -1,5 +1,7 @@
-from bson.objectid import ObjectId
 from collections import defaultdict
+from bson.objectid import ObjectId
+import devspace_utils
+
 
 class StatsProvider:
     """Class used to compute stats on user connections"""
@@ -37,11 +39,16 @@ class StatsProvider:
                 d[key] = float(format(val / connections_size, '.4f'))
 
     def add_user_connection_stats(self, connection):
-        self.age_dict[str(connection['age'])] += 1
+        # self.age_dict[str(connection['age'])] += 1
         self.comp_os_dict[connection['computerOS']] += 1
         self.mobile_os_dict[connection['mobileOS']] += 1
+        self.classify_age_range(connection['age'])
         self.compute_workplace_norm(connection['workplace'])
         self.compute_interests(connection['interests'])
+
+    def classify_age_range(self, age):
+        age_label = devspace_utils.get_age_range(age)
+        self.age_dict[age_label] += 1
 
     def compute_workplace_norm(self, workplace):
         workplace = workplace.lower().replace(' ', '')
@@ -64,7 +71,7 @@ class StatsProvider:
     def save_or_update_new_stats(self):
         data = self.get_new_stats()
         self.db['stats'].find_one_and_update(
-                                            {'user': ObjectId(self.user_id)},
-                                            {'$set': {'data': data}},
-                                            upsert=True
-                                            )
+            {'user': ObjectId(self.user_id)},
+            {'$set': {'data': data}},
+            upsert=True
+        )

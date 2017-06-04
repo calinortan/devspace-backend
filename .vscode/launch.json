@@ -1,11 +1,24 @@
 {
     "version": "0.2.0",
     "configurations": [
-
+        {
+            "name": "Python Integrated Terminal/Console",
+            "type": "python",
+            "request": "launch",
+            "stopOnEntry": false,
+            "pythonPath": "C:/Users/Calin Ortan/Anaconda3/python.exe",
+            "program": "${file}",
+            "cwd": "${workspaceRoot}",
+            "console": "integratedTerminal",
+            "debugOptions": [
+                "WaitOnAbnormalExit",
+                "WaitOnNormalExit"
+            ]
+        },
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
+            "name": "Launch Node server",
             "program": "${workspaceRoot}/src/server.ts",
             "cwd": "${workspaceRoot}",
             "sourceMaps": true,
