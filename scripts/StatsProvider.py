@@ -16,6 +16,7 @@ class StatsProvider:
         self.mobile_os_dict = defaultdict(float)
         self.workplace_os_dict = defaultdict(float)
         self.interests_dict = defaultdict(float)
+        self.prog_lang_dict = defaultdict(float)
         self.db = db_conn
         self.user_id = user_id
         self.get_connections()
@@ -33,7 +34,7 @@ class StatsProvider:
 
     def normalize_dictionaries(self, connections_size):
         list = [self.age_dict, self.comp_os_dict, self.mobile_os_dict,
-                self.interests_dict, self.workplace_os_dict]
+                self.interests_dict, self.workplace_os_dict, self.prog_lang_dict]
         for d in list:
             for key, val in d.items():
                 d[key] = float(format(val / connections_size, '.4f'))
@@ -45,18 +46,29 @@ class StatsProvider:
         self.classify_age_range(connection['age'])
         self.compute_workplace_norm(connection['workplace'])
         self.compute_interests(connection['interests'])
+        self.compute_programming_lang(connection['programmingLanguages'])
 
     def classify_age_range(self, age):
         age_label = devspace_utils.get_age_range(age)
         self.age_dict[age_label] += 1
 
+    def compute_programming_lang(self, lang_list):
+        for i, lang in enumerate(lang_list):
+            if i == 0:
+                score = 10
+            elif i == 1:
+                score = 5
+            else:
+                score = 2
+            self.prog_lang_dict[lang] += score
+
     def compute_workplace_norm(self, workplace):
-        workplace = workplace.lower().replace(' ', '')
+        workplace = devspace_utils.get_normalized_string_key(workplace)
         self.workplace_os_dict[workplace] += 1
 
     def compute_interests(self, list):
         for i, val in enumerate(list):
-            interest = val.lower().replace(' ', '')
+            interest = devspace_utils.get_normalized_string_key(val)
             self.interests_dict[interest] += 1
 
     def get_new_stats(self):
@@ -66,6 +78,7 @@ class StatsProvider:
         data['mobileOS'] = dict(self.mobile_os_dict)
         data['workplace'] = dict(self.workplace_os_dict)
         data['interests'] = dict(self.interests_dict)
+        data['programmingLanguages'] = dict(self.prog_lang_dict)
         return data
 
     def save_or_update_new_stats(self):
