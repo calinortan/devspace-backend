@@ -16,7 +16,7 @@ def get_mongo_connection(url, dbName):
 user_id = '58d7a61f11af570bc83e9d34'
 db_conn = get_mongo_connection(mongodb_url, 'calinortandb')
 rec = LinkRecommender(db_conn, user_id)
-rec.apply_kmeans(3)
-rec.plot_3d_clusters() # make sure to uncomment only 3 features in LinkRecommender.py
-# rec.print_clusters()
+rec.apply_kmeans(4)
+# rec.plot_3d_clusters() # make sure to uncomment only 3 features in LinkRecommender.py
+rec.print_clusters()
 

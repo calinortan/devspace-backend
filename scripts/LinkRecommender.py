@@ -41,36 +41,43 @@ class LinkRecommender:
 
     def create_features_set(self, user):
         user_features = defaultdict(float)
-        # self.add_age_feature(user_features, user)
+        self.add_age_feature(user_features, user)
         self.add_workplace_feature(user_features, user)
         self.add_mobile_os_feature(user_features, user)
-        # self.add_computer_os_feature(user_features, user)
+        self.add_computer_os_feature(user_features, user)
         self.add_interests_feature(user_features, user)
+        self.add_prog_lang_feature(user_features, user)
 
         return user_features
 
     def add_age_feature(self, user_features, user):
         self.add_feature(user_features, 'age',
                          devspace_utils.get_age_range(user['age']))
+    def add_prog_lang_feature(self, user_features, user):
+        key_name = 'programmingLanguages'
+        user_features[key_name] = 0.0
+        for interest in user[key_name]:
+            self.add_feature(user_features, key_name,
+                             interest, normalize_key=False)
 
     def add_computer_os_feature(self, user_features, user):
         self.add_feature(user_features, 'computerOS', user['computerOS'])
 
     def add_workplace_feature(self, user_features, user):
         self.add_feature(user_features, 'workplace',
-                         user['workplace'], normalize=True)
+                         user['workplace'], normalize_key=True)
 
     def add_interests_feature(self, user_features, user):
         user_features['interests'] = 0.0
         for interest in user['interests']:
             self.add_feature(user_features, 'interests',
-                             interest, normalize=True)
+                             interest, normalize_key=True)
 
     def add_mobile_os_feature(self, user_features, user):
         self.add_feature(user_features, 'mobileOS', user['mobileOS'])
 
-    def add_feature(self, user_features, attr, attr_value, normalize=False):
-        if normalize:
+    def add_feature(self, user_features, attr, attr_value, normalize_key=False):
+        if normalize_key:
             attr_value = devspace_utils.get_normalized_string_key(attr_value)
         key = str(attr_value)
         if key in self.stats['data'][attr] or attr_value in self.stats['data'][attr]:
@@ -129,7 +136,7 @@ class LinkRecommender:
         for user, label in zip(self.users_list, labels):
             clusters[str(label)]['cluster_size'] += 1
             if ObjectId(self.user_id) == user['_id']:
-                clusters['contains_user'] = True
+                clusters[str(label)]['contains_user'] = True
             if ObjectId(user['_id']) in self.connections:
                 clusters[str(label)]['f_n'] += 1
 
