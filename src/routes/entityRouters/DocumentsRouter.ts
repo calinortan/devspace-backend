@@ -17,11 +17,13 @@ export class DocumentsRouter {
   }
 
   private setRoutes(): void {
-    this.router.get('/', (req: Request, res: Response, next: NextFunction) => {
-      res.json({
-        message: 'This is the documents endpoint and should be guarded by authorization token'
-      });
-    });
+    this.router.get('/', this.controller.getDocumentsForUser)
+    this.router.post('/', this.controller.addNewDocument)
+    // this.router.get('/', (req: Request, res: Response, next: NextFunction) => {
+    //   res.json({
+    //     message: 'This is the documents endpoint and should be guarded by authorization token'
+    //   });
+    // });
   }
 
   public getRouter(): Router {
@@ -29,7 +31,6 @@ export class DocumentsRouter {
   }
 }
 
-// Create the HeroRouter, and export its configured Express.Router
 const documentsRoutes = new DocumentsRouter();
 
 export default documentsRoutes.getRouter();
