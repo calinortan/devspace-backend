@@ -2,6 +2,7 @@ import { Schema, model, Document, Connection } from 'mongoose'
 import Mongoose = require('mongoose');
 import bcrypt = require('bcrypt')
 import ScriptRunner from '../services/ScriptRunner'
+import timestamps = require('mongoose-timestamp')
 
 const userSchema = new Mongoose.Schema({
   email: {
@@ -23,6 +24,7 @@ const userSchema = new Mongoose.Schema({
     ref: 'user'
   }
 });
+userSchema.plugin(timestamps);
 
 userSchema.pre('save', function (next) {
   bcrypt.genSalt(10).then((salt: string) => {
@@ -41,7 +43,6 @@ userSchema.methods.handleLoginAttempt = function (submittedPassword: string, cal
   }).catch((err: Error) => callback(err));
 }
 
-
 interface User extends Document {
   email?: String;
   password?: String;
@@ -53,7 +54,9 @@ interface User extends Document {
   programmingLanguages?: String[],
   computerOS?: String,
   mobileOS?: String,
-  connections?: Schema.Types.ObjectId[]
+  connections?: Schema.Types.ObjectId[],
+  createdAt?: String,
+  updatedAt?: String,
   handleLoginAttempt?: (submittedPassword: String, callback: (err: Error, isMatch: boolean) => void) => void
 }
 

@@ -1,6 +1,7 @@
 import { User, UserModel } from './User';
 import { Schema, model, Document, Connection } from 'mongoose'
 import Mongoose = require('mongoose');
+import timestamps = require('mongoose-timestamp')
 
 const friendRequestSchema = new Mongoose.Schema({
   from: {
@@ -16,10 +17,14 @@ const friendRequestSchema = new Mongoose.Schema({
   status: String
 });
 
+friendRequestSchema.plugin(timestamps)
+
 interface FriendRequest extends Document {
   from: User,
   to: User,
-  status: String
+  status: String,
+  createdAt?: String,
+  updatedAt?: String
 }
 
 const FriendRequestModel = model<FriendRequest>('friendRequest', friendRequestSchema)

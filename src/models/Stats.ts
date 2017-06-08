@@ -1,6 +1,7 @@
 import { User } from './User';
 import { Schema, model, Document } from 'mongoose'
 import Mongoose = require('mongoose');
+import timestamps = require('mongoose-timestamp')
 
 const statsSchema = new Mongoose.Schema({
   user: {
@@ -10,6 +11,7 @@ const statsSchema = new Mongoose.Schema({
   },
   data: Object
 });
+statsSchema.plugin(timestamps)
 
 export interface StatsData {
   age?: String,
@@ -17,7 +19,9 @@ export interface StatsData {
 }
 interface Stats extends Document {
   user: User,
-  data: StatsData
+  data: StatsData,
+  createdAt?: String,
+  updatedAt?: String
 }
 
 const StatsModel = model<Stats>('stats', statsSchema)
