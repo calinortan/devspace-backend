@@ -7,9 +7,9 @@ from collections import defaultdict
 from config import mongodb_url
 from pprint import pprint
 from sklearn.cluster import KMeans
+from sklearn.decomposition import PCA
 from sklearn.preprocessing import MinMaxScaler
 from mpl_toolkits.mplot3d import Axes3D
-
 
 
 class LinkRecommender:
@@ -53,6 +53,7 @@ class LinkRecommender:
     def add_age_feature(self, user_features, user):
         self.add_feature(user_features, 'age',
                          devspace_utils.get_age_range(user['age']))
+
     def add_prog_lang_feature(self, user_features, user):
         key_name = 'programmingLanguages'
         user_features[key_name] = 0.0
@@ -102,20 +103,20 @@ class LinkRecommender:
         return user['connections']
 
     def plot_2d_clusters(self):
-        """Only works when 2 features are computed"""
         labels = self.get_kmeans_labels()
-        X = self.np_features_array
+        pca = PCA(n_components=2)
+        X = pca.fit_transform(self.np_features_array)
         # print(labels)
         plt.scatter(X[:, 0], X[:, 1], marker='^', c=labels)
         plt.show()
 
     def plot_3d_clusters(self):
-        """Only works when 3 features are computed"""
         labels = self.get_kmeans_labels()
-        X = self.np_features_array
+        pca = PCA(n_components=3)
+        X = pca.fit_transform(self.np_features_array)
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
-        ax.scatter(X[:, 0], X[:, 1], X[:,2], marker='^', c=labels)
+        ax.scatter(X[:, 0], X[:, 1], X[:, 2], marker='^', c=labels)
 
         ax.set_xlabel('X Label')
         ax.set_ylabel('Y Label')
@@ -153,4 +154,3 @@ class LinkRecommender:
     #     labels = self.get_kmeans_labels()
 
     #     for user, label in zip(self.users_list, labels):
-        
