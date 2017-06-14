@@ -24,8 +24,8 @@ class DocumentsController {
       .catch(err => res.status(400).json({ message: err.message }));
   }
   public addNewDocument(req: Request, res: Response, next: NextFunction) {
-    const user = <IDocument>req.body;
-    const docModel = new DocumentModel(user);
+    const doc = <IDocument>req.body;
+    const docModel = new DocumentModel(doc);
     docModel.save()
       .then((document) => {
         res.status(200).json({ status: `new Post created at ${document.createdAt}`, document });

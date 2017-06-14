@@ -7,6 +7,7 @@ const documentSchema = new Mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'user'
   },
+  title: String,
   content: String,
   image: String,
   comments: {
@@ -23,6 +24,7 @@ documentSchema.plugin(timestamps)
 
 interface IDocument extends Document {
   user?: Schema.Types.ObjectId;
+  title?: Schema.Types.String;
   content?: String;
   image?: String,
   comments?: Schema.Types.ObjectId[],
