@@ -15,7 +15,7 @@ class DocumentsController {
     DocumentModel.find(query)
       .populate({
         path: 'user',
-        select: 'name avatar'
+        select: 'name avatar workplace'
       })
       .then((docs) => {
         if (docs == null) return res.status(404);
