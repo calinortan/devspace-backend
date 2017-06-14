@@ -13,10 +13,10 @@ class DocumentsController {
     }
 
     DocumentModel.find(query)
-      // .populate({
-      //   path: 'from to',
-      //   select: 'name avatar'
-      // })
+      .populate({
+        path: 'user',
+        select: 'name avatar'
+      })
       .then((docs) => {
         if (docs == null) return res.status(404);
         res.status(200).json({ documents: docs });
