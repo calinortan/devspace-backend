@@ -56,7 +56,32 @@ class App {
     // placeholder route handler
     router.get('/', (req, res, next) => {
       res.json({
-        message: 'Hello World!'
+        friend_reccomendations: [{
+          _id: '58d7a61f11af570bc83e9d3c',
+          recomendationFor: '58d7a61f11af570bc83e9d34',
+          user: {
+            _id: '58d7a61f11af570bc83e9d3e',
+            "name": "Zsolt Solyom",
+            "email": "zsoltsolyom18@test.com",
+            "avatar": "",
+            "age": 24,
+            "workplace": "Softvision",
+            "computerOS": "Linux",
+            "mobileOS": "Android",
+            "connections": [],
+            "programmingLanguages": [
+              "Javascript",
+              "Java",
+              "C/C++"
+            ],
+            "interests": [
+              "Movies",
+              " swimming",
+              " cycling"
+            ],
+            "__v": 0
+          }
+        }]
       });
     });
     this.express.use('/', router);

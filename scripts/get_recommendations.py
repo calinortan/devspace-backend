@@ -15,10 +15,10 @@ def get_mongo_connection(url, dbName):
 # user_id = sys.argv[1]
 user_id = '58d7a61f11af570bc83e9d34'
 db_conn = get_mongo_connection(mongodb_url, 'calinortandb')
-rec = LinkRecommender(db_conn, user_id)
-rec.apply_kmeans(2)
-# rec.plot_3d_clusters()
+rec = LinkRecommender(db_conn, user_id, PCA_components_no=4)
+rec.apply_kmeans(4)
+rec.print_clusters()
 rec.plot_2d_clusters()
+# rec.plot_3d_clusters()
 
-# rec.print_clusters()
 

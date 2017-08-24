@@ -9,11 +9,12 @@ from pprint import pprint
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.metrics import silhouette_score as silhouette
 from mpl_toolkits.mplot3d import Axes3D
 
 
 class LinkRecommender:
-    def __init__(self, db_conn, user_id):
+    def __init__(self, db_conn, user_id, PCA_components_no=0):
         """
         @type db_conn: pymongo.database.Database
         @type user_id: str
@@ -23,6 +24,7 @@ class LinkRecommender:
         self.connections = self.get_user_connections()
         self.stats = self.get_current_connections_stats()
         self.get_reccomendations()
+        self.PCA_components_no = PCA_components_no
 
     def get_reccomendations(self):
         users = self.db_conn['users'].find()
@@ -91,6 +93,9 @@ class LinkRecommender:
         X = MinMaxScaler(feature_range=(
             0, 1), copy=False).fit_transform(np_features_array)
         # pprint(X)
+        if self.PCA_components_no > 0:
+            pca = PCA(n_components=self.PCA_components_no)
+            X = pca.fit_transform(X)
         self.np_features_array = X
         self.n_clusters = n_clusters
         self.kmeans = KMeans(n_clusters, random_state=0).fit(X)
@@ -149,6 +154,8 @@ class LinkRecommender:
             clusters[str(i)]['overall_score'] = format(
                 clusters[str(i)]['f_n/total_f_n'] + clusters[str(i)]['f_n/c_size'])
         pprint(clusters)
+        s = silhouette(self.np_features_array, labels)
+        print('\nSilhouette: %.3f' % s)
 
     # def print_recommendations(self):
     #     labels = self.get_kmeans_labels()
