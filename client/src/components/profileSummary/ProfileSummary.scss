@@ -1,0 +1,17 @@
+.ProfileSummary {
+    width: 300px;
+    min-width: 300px;
+    border-right: 1px solid #292929;
+    background-color: #393836;
+    color: white;
+    display: flex;
+    @media only screen and (max-width: 768px) {
+        width: 100%;
+        position: initial;
+    }
+}
+
+@import './ProfileCard/ProfileCard';
+@import './ProfileCard/UserInterests';
+@import './ProfileCard/TechList';
+@import './ProfileCard/ProfileCardPlaceholder';

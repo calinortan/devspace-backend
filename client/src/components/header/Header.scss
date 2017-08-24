@@ -1,0 +1,35 @@
+.Header {
+    width: 100%;
+    background: #32b38c;
+    &-Block {
+        display: inline-block;
+        height: 60px;
+        min-width: 200px;
+        box-sizing: border-box;
+        border-right: 1px solid #88c3a5;
+        vertical-align: top;
+        @media only screen and (max-width: 480px) {
+            max-width: 50%;
+            min-width: auto;
+            border: none;
+        }
+    }
+    &-Text {
+        color: white;
+        padding: 10px 20px 10px 20px;
+        font-size: 30px;
+        font-weight: bold;
+    }
+    &-User {
+        border-left: 1px solid #88c3a5;
+        position: absolute;
+        right: 0;
+        @media only screen and (max-width: 480px) {
+            display: none;
+        }
+    }
+}
+
+@import './components/NotificationsBlock';
+@import './components/UserPrivacyBlock';
+@import './components/FriendRequestsContainer';

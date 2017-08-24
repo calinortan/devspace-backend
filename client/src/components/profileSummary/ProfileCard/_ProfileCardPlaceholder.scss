@@ -1,0 +1,94 @@
+.ProfileCardPlaceholder {
+    width: 100%;
+    height: 400px;
+    @keyframes placeHolderShimmer{
+        0%{
+            background-position: calc(-100% + 4px) 0
+        }
+        100%{
+            background-position: calc(100% - 4px) 0
+        }
+    }
+    .wrapper {
+        width: 100%;
+        height: 400px;
+    }
+
+    .animated-background {
+        animation-duration: 0.6s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-name: placeHolderShimmer;
+        animation-timing-function: linear;
+        background: #292929;
+        background: linear-gradient(to right, #292929 8%, #555 18%, #292929 63%);
+        background-size: 180% 104px;
+        height: 100%;
+        min-height: 100px;
+        position: relative;
+    }
+
+    .background-masker {
+        background: #292929;
+        position: absolute;
+        box-sizing: border-box;
+    }
+
+    .background-masker.a {
+        width: 100%;
+        height: 20px;
+    }
+    .background-masker.b {
+        width: calc(50% - 90px);
+        height: 220px;
+    }
+    .background-masker.c {
+        width: calc(50% - 90px);
+        height: 220px;
+        right: 0;
+    }
+    .background-masker.d {
+        width: 100%;
+        height: 20px;
+        top: 200px;
+    }
+    .background-masker.e {
+        width: 100%;
+        height: 20px;
+        top: 220px;
+    }
+    .background-masker.f {
+        width: 100%;
+        height: 20px;
+        top: 260px;
+    }
+    .background-masker.g {
+        width: 100%;
+        height: 20px;
+        top: 280px;
+    }
+    .background-masker.h {
+        width: 100%;
+        height: 20px;
+        top: 320px;
+    }
+    .background-masker.i {
+        width: 100%;
+        height: 20px;
+        top: 340px;
+    }
+    .background-masker.j {
+        width: 100%;
+        height: 20px;
+        top: 380px;
+    }
+    .background-masker.k {
+        width: 20px;
+        height: 100%;
+    }
+    .background-masker.l {
+        width: 20px;
+        height: 100%;
+        right: 0;
+    }
+}

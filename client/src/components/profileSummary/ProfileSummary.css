@@ -1,0 +1,154 @@
+.ProfileSummary {
+  width: 300px;
+  min-width: 300px;
+  border-right: 1px solid #292929;
+  background-color: #393836;
+  color: white;
+  display: flex; }
+  @media only screen and (max-width: 768px) {
+    .ProfileSummary {
+      width: 100%;
+      position: initial; } }
+
+.ProfileCard {
+  background: #292929; }
+  .ProfileCard-UserName {
+    position: relative;
+    font-size: 30px;
+    padding: 10px 20px;
+    border-top: 1px solid #393836; }
+    .ProfileCard-UserName-Text {
+      display: inline-block;
+      width: 200px; }
+    .ProfileCard-UserName:after {
+      content: '';
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      -moz-border-radius: 7.5px;
+      -webkit-border-radius: 7.5px;
+      border-radius: 7.5px;
+      background-color: limegreen;
+      right: 50px;
+      top: 20px; }
+  .ProfileCard-Avatar {
+    width: 220px;
+    height: 220px;
+    display: block;
+    box-sizing: border-box;
+    margin: 0px auto 0px auto;
+    padding: 20px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none; }
+  .ProfileCard-Workplace {
+    padding: 5px 0 5px 20px;
+    color: darkgray;
+    font-size: 18px;
+    border-top: 1px solid #393836; }
+  .ProfileCard-Favorites {
+    background: #393836;
+    font-size: small;
+    padding: 5px;
+    font-size: small;
+    color: gray; }
+  .ProfileCard-Interests {
+    padding: 5px 15px 5px 15px;
+    box-sizing: border-box;
+    border-top: 1px solid #393836; }
+  .ProfileCard-TechStack {
+    padding: 5px 15px 5px 15px;
+    box-sizing: border-box;
+    border-top: 1px solid #393836; }
+  .ProfileCard-Actions {
+    padding: 10px 0 10px 20px;
+    box-sizing: border-box;
+    border-top: 1px solid #393836; }
+    .ProfileCard-Actions-Relation {
+      margin-right: 20px;
+      width: 100px;
+      color: white;
+      background: #32b38c; }
+    .ProfileCard-Actions-Chat {
+      width: 70px;
+      background-color: inherit;
+      border: 1px solid darkgray;
+      color: darkgray; }
+
+.UserInterests {
+  display: flex;
+  flex-wrap: wrap; }
+
+.ProfileCardPlaceholder {
+  width: 100%;
+  height: 400px; }
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: calc(-100% + 4px) 0; }
+  100% {
+    background-position: calc(100% - 4px) 0; } }
+  .ProfileCardPlaceholder .wrapper {
+    width: 100%;
+    height: 400px; }
+  .ProfileCardPlaceholder .animated-background {
+    animation-duration: 0.6s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: #292929;
+    background: linear-gradient(to right, #292929 8%, #555 18%, #292929 63%);
+    background-size: 180% 104px;
+    height: 100%;
+    min-height: 100px;
+    position: relative; }
+  .ProfileCardPlaceholder .background-masker {
+    background: #292929;
+    position: absolute;
+    box-sizing: border-box; }
+  .ProfileCardPlaceholder .background-masker.a {
+    width: 100%;
+    height: 20px; }
+  .ProfileCardPlaceholder .background-masker.b {
+    width: calc(50% - 90px);
+    height: 220px; }
+  .ProfileCardPlaceholder .background-masker.c {
+    width: calc(50% - 90px);
+    height: 220px;
+    right: 0; }
+  .ProfileCardPlaceholder .background-masker.d {
+    width: 100%;
+    height: 20px;
+    top: 200px; }
+  .ProfileCardPlaceholder .background-masker.e {
+    width: 100%;
+    height: 20px;
+    top: 220px; }
+  .ProfileCardPlaceholder .background-masker.f {
+    width: 100%;
+    height: 20px;
+    top: 260px; }
+  .ProfileCardPlaceholder .background-masker.g {
+    width: 100%;
+    height: 20px;
+    top: 280px; }
+  .ProfileCardPlaceholder .background-masker.h {
+    width: 100%;
+    height: 20px;
+    top: 320px; }
+  .ProfileCardPlaceholder .background-masker.i {
+    width: 100%;
+    height: 20px;
+    top: 340px; }
+  .ProfileCardPlaceholder .background-masker.j {
+    width: 100%;
+    height: 20px;
+    top: 380px; }
+  .ProfileCardPlaceholder .background-masker.k {
+    width: 20px;
+    height: 100%; }
+  .ProfileCardPlaceholder .background-masker.l {
+    width: 20px;
+    height: 100%;
+    right: 0; }

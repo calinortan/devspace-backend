@@ -1,0 +1,9 @@
+.DocumentItem {
+  border: 1px solid rgba(100, 100, 100, 0.2); }
+
+.DocumentsList {
+  padding: 0 20px;
+  list-style-type: none; }
+  .DocumentsList-Item {
+    margin: 20px 0 20px 0;
+    max-width: 800px; }

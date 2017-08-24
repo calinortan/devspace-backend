@@ -1,0 +1,46 @@
+.SignIn {
+  button {
+    display: inline-block;
+    border: none;
+    height: 30px;
+    border-radius: 3px;
+  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  &-Message {
+    color: white;
+    margin-top: 40px;
+    font-size: 25px;
+    font-weight: lighter;
+  }
+  &-Form {
+    margin-top: 10%;
+    input:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0px 1000px #303030 inset;
+      -webkit-text-fill-color: white !important;
+    }
+    &-SubmitButton {
+      margin-top: 30px;
+      background: #32b38c;
+      width: 100%;
+      height: 35px;
+      transition: 0.2s
+    }
+    &-SubmitButton:hover {
+      background: rgba(50, 179, 140, 0.65)
+    }
+    &-AsyncErrorMsg {
+      color: #f44336;
+      font-size: 12px;
+    }
+    &-Spinner {
+      margin-top: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+}

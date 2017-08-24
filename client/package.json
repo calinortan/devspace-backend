@@ -1,0 +1,35 @@
+{
+  "name": "devspace",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "node-sass-chokidar": "0.0.3",
+    "npm-run-all": "^4.0.2",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-scripts": "1.0.10",
+    "axios": "^0.16.0",
+    "chart.js": "^1.1.1",
+    "firebase": "^3.7.8",
+    "lodash": "^4.17.4",
+    "material-ui": "^0.17.1",
+    "prop-types": "^15.5.4",
+    "react-chartjs": "^0.8.0",
+    "react-redux": "^5.0.3",
+    "react-router": "^3.0.2",
+    "react-tap-event-plugin": "^2.0.1",
+    "redux": "^3.6.0",
+    "redux-form": "^6.6.1",
+    "redux-thunk": "^2.2.0",
+    "socket.io-client": "^1.7.2"
+  },
+  "scripts": {
+    "build-css": "node-sass-chokidar src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build": "npm run build-css && react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

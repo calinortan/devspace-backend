@@ -1,0 +1,94 @@
+.Header {
+  width: 100%;
+  background: #32b38c; }
+  .Header-Block {
+    display: inline-block;
+    height: 60px;
+    min-width: 200px;
+    box-sizing: border-box;
+    border-right: 1px solid #88c3a5;
+    vertical-align: top; }
+    @media only screen and (max-width: 480px) {
+      .Header-Block {
+        max-width: 50%;
+        min-width: auto;
+        border: none; } }
+  .Header-Text {
+    color: white;
+    padding: 10px 20px 10px 20px;
+    font-size: 30px;
+    font-weight: bold; }
+  .Header-User {
+    border-left: 1px solid #88c3a5;
+    position: absolute;
+    right: 0; }
+    @media only screen and (max-width: 480px) {
+      .Header-User {
+        display: none; } }
+
+.NotificationsBlock {
+  display: flex;
+  justify-content: space-around; }
+  .NotificationsBlock-Button {
+    border: none;
+    width: 100%;
+    height: 60px;
+    overflow: hidden;
+    background: transparent;
+    padding: 0 0 0 10px; }
+
+.UserPrivacyBlock {
+  height: 100%;
+  position: relative;
+  cursor: pointer;
+  display: block; }
+  .UserPrivacyBlock-AvatarBox {
+    position: absolute;
+    height: 100%;
+    width: 65px;
+    right: 0; }
+    .UserPrivacyBlock-AvatarBox-Image {
+      height: 60px;
+      width: 60px; }
+    .UserPrivacyBlock-AvatarBox-Status {
+      display: inline-block;
+      background: limegreen;
+      width: 5px;
+      height: 100%; }
+  .UserPrivacyBlock-UserName {
+    padding: 20px 15px; }
+    .UserPrivacyBlock-UserName-Text {
+      color: white;
+      font-size: 13px;
+      font-weight: bold;
+      position: relative;
+      display: inline-block;
+      height: 20px;
+      width: 90px; }
+      .UserPrivacyBlock-UserName-Text:after {
+        content: "";
+        position: absolute;
+        border: 5px solid transparent;
+        border-top: 5px solid white;
+        top: 5px;
+        right: -10px; }
+
+.FriendRequestsContainer {
+  background: #393836;
+  border: 1px solid gray; }
+  .FriendRequestsContainer-List {
+    list-style-type: none;
+    padding: 5px;
+    margin: 0; }
+    .FriendRequestsContainer-List-Item {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px;
+      transition: background-color 0.2s; }
+      .FriendRequestsContainer-List-Item:hover {
+        background-color: rgba(255, 255, 255, 0.089); }
+      .FriendRequestsContainer-List-Item-Name {
+        padding: 15px 0 0 20px;
+        width: 150px; }
+        .FriendRequestsContainer-List-Item-Name a:hover {
+          color: #32b38c; }
